@@ -1,7 +1,4 @@
-#include <iostream>
 #include <iconvlite.h>
-
-using namespace std;
 
 static void cp2utf1(char *out, const char *in) {
     static const int table[128] = {
@@ -36,26 +33,26 @@ static void cp2utf1(char *out, const char *in) {
             *out++ = *in++;
     *out = 0;
 }
-string cp2utf(string s) {
+std::string cp2utf(std::string s) {
     int c,i;
     int len = s.size();
-    string ns;
+    std::string ns;
     for(i=0; i<len; i++) {
         c=s[i];
         char buf[4], in[2] = {0, 0};
         *in = c;
         cp2utf1(buf, in);
-        ns+=string(buf);
+        ns+=std::string(buf);
     }
    return ns;
 }
 
-string utf2cp(string s) {
+std::string utf2cp(std::string s) {
     size_t len = s.size();
     const char *buff = s.c_str();
     char *output = new char[len];
     convert_utf8_to_windows1251(buff, output, len);
-    string ns(output);
+    std::string ns(output);
     return ns;
 }
 
